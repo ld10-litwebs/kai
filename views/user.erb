@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザーページ</title>
+  <link rel="stylesheet" >
+  <link rel="stylesheet" type='text/css' href="/stylesheets/index.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class ='header'>
+        <div class='login-status'>
+    <% unless session[:user] %>
+    <a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br>
+    <h2>未ログイン</h2> 
+    <% else %>
+    <a href='/'>戻る</a>
+    </div>
+    </div>
+    <div class ='name'>
+    <h2><%= User.find(session[:user]).mail %>さんの投稿</h2>
+    </div>
+    
+    <% @posts.each do |content| %>
+    <div class='box2'>
+    <article>
+        <%if User.find(session[:user]).id==content.user_id%>
+      <h1><%=content.text%></h1>
+      <div class='comment-text'>
+         <a href ="/comment/<%=content.id%>"><%=content.number_of_comment%>件のコメント</a>
+      </div>
+    </article>
+    </div>
+    <% end %>
+    <%end%>
+    <% end %>
+    
+    
+</body>
+</html>
